@@ -218,7 +218,7 @@ h4{
     flex:1;
     margin-right: 10px;
   }
-  .timetable{
+  .timeline{
     flex:1;
     margin-left: 10px;
   }
@@ -230,7 +230,7 @@ h4{
   .statistics{
     margin-right: 0px;
   }
-  .timetable{
+  .timeline{
     margin-left: 0px;
   }
 }

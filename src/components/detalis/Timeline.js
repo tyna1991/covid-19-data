@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 
-class Timetable extends React.Component{
+class Timeline extends React.Component{
     constructor(){
         super()
         this.state={
@@ -39,8 +39,8 @@ class Timetable extends React.Component{
         }
     }
     render(){
-    return <div className="timetable">
-                <h4>Timetable</h4>
+    return <div className="timeline">
+                <h4>Timeline</h4>
                 <div ref={this.listOfPeriods} className="period-change">
                     <div onClick={this.displayOptions} className="select">
                         <span>{this.state.periods[this.state.index]}</span>
@@ -61,4 +61,4 @@ class Timetable extends React.Component{
     }
 }
 
-export default Timetable
+export default Timeline

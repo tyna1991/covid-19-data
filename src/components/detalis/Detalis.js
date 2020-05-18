@@ -1,7 +1,7 @@
 import React from 'react';
 import './../../App.css';
 import Statistics from './Statistics';
-import Timetable from './Timetable';
+import Timeline from './Timeline';
 
 function Detalis(){
     return <div className="detalis" id="scrollbar-custom">
@@ -11,7 +11,7 @@ function Detalis(){
            Morbi dapibus porta dignissim. Integer ut fermentum leo, imperdiet varius felis. Etiam porttitor malesuada lectus vitae vestibulum. </p>
         <div className="country-detalis">
         <Statistics/>
-        <Timetable/>
+        <Timeline/>
         </div>
     </div>
 }
