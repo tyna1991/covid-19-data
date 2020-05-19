@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-export const countryService = {
-    countriesService,
+export const countriesService = {
+    allCountries,
 };
 
 //get all countries
-function countriesService() {
+function allCountries() {
     return axios.get('https://api.covid19api.com/countries')
 }
