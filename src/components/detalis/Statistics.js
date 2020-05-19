@@ -13,13 +13,13 @@ class Statistics extends React.Component{
         }
     }
     componentDidUpdate(prevProps){
-        if(prevProps.status!==this.props.status && this.props.status.length){
+        if(this.props.name && prevProps.name!==this.props.name){
             const selectedCountryTotal = this.props.countries.filter(country=>{
-                return country.Country === this.props.status[0].Country
+                return country.Country === this.props.name
             })
             this.setState({
-                selectedCountryTotal: selectedCountryTotal.length ? selectedCountryTotal[0] : {
-                    Country:this.props.status[0].Country,
+                    selectedCountryTotal: selectedCountryTotal.length ? selectedCountryTotal[0] : {
+                    Country:this.props.name,
                     TotalConfirmed: '-',
                     TotalDeaths:'-',
                     TotalRecovered:'-'
