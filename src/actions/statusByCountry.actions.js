@@ -9,7 +9,7 @@ export const statusByCountry={
 }
 function byCountryAllStatus(countryNameSlug, countryName) {
     return dispatch => {
-        dispatch(request(countryName));
+        dispatch(request(countryName, countryNameSlug));
         statusService.byCountryAllStatus(countryNameSlug)
             .then(
                 data => {dispatch(success(data));
@@ -19,13 +19,13 @@ function byCountryAllStatus(countryNameSlug, countryName) {
                 }
             );
     };
-    function request(countryName) { return { type: 'STATUS_BY_COUNTRY_REQUEST', countryName} }
+    function request(countryName, countryNameSlug) { return { type: 'STATUS_BY_COUNTRY_REQUEST', countryName, countryNameSlug} }
     function success(response) { return { type: 'STATUS_BY_COUNTRY_SUCCESS', response } }
 }
-function byCountryAndStatusAfterDate(countryNameSlug, from,to, countryName) {
+function byCountryAndStatusAfterDate(countryNameSlug, from, countryName) {
     return dispatch => {
-        dispatch(request(countryName));
-        statusService.byCountryAndStatusAfterDate(countryNameSlug, from,to)
+        dispatch(request(countryName, countryNameSlug));
+        statusService.byCountryAndStatusAfterDate(countryNameSlug, from, countryName)
             .then(
                 data => {dispatch(success(data));
                 },
@@ -34,7 +34,7 @@ function byCountryAndStatusAfterDate(countryNameSlug, from,to, countryName) {
                 }
             );
     };
-    function request(countryName) { return { type: 'STATUS_BY_COUNTRY_FROM_TO_REQUEST', countryName} }
+    function request(countryName, countryNameSlug) { return { type: 'STATUS_BY_COUNTRY_FROM_TO_REQUEST', countryName, countryNameSlug} }
     function success(response) { return { type: 'STATUS_BY_COUNTRY_FROM_TO_SUCCESS', response } }
 }
 function setPeriod(period) {
