@@ -1,7 +1,7 @@
 import React from 'react';
 import './../../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faEthernet } from '@fortawesome/free-solid-svg-icons'
 import {countriesAction} from './../../actions/allCountries.actions'
 import {statusByCountry} from './../../actions/statusByCountry.actions'
 import {statusCountries} from './../../actions/statusCountries.actions'
@@ -34,14 +34,14 @@ class Map extends React.Component{
     })
     }
     submit(){
-        if(!this.props.period){
+        if(!this.state.selectedCountrySlug) return;
+        if(!this.props.period || (!this.props.period!==undefined && !this.props.period.dateFrom)){
             this.props.byCountryAllStatus(this.state.selectedCountrySlug, this.state.selectedCountryName)
         }else{
-            
+            this.props.byCountryAndStatusAfterDate(this.state.selectedCountrySlug, this.props.period.dateFrom, this.state.selectedCountryName)
         }
     }
     render(){
-        console.log(this.props)
     return <div className="map">
             <div className="country-change">
                 <div className="select-wrapper">
@@ -69,6 +69,7 @@ function mapState(state) {
 const actionCreators = {
     getAllCountries:countriesAction.allCountries,
     byCountryAllStatus:statusByCountry.byCountryAllStatus,
+    byCountryAndStatusAfterDate:statusByCountry.byCountryAndStatusAfterDate,
     summary:statusCountries.summary,
 }
 
