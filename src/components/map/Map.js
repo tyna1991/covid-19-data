@@ -2,6 +2,8 @@ import React from 'react';
 import './../../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import {countriesAction} from './../../actions/allCountries.actions'
+import { connect } from 'react-redux';
 
 class Map extends React.Component{
     constructor(){
@@ -10,6 +12,9 @@ class Map extends React.Component{
             selectedCountry:'',
         }
         this.changeHandler = this.changeHandler.bind(this)
+    }
+    componentDidMount(){
+        this.props.getCountries();
     }
     changeHandler(e){
     const {value} = e.target;
@@ -22,9 +27,10 @@ class Map extends React.Component{
             <div className="country-change">
                 <div className="select-wrapper">
                     <select onChange={this.changeHandler} name="selectedCountry">
-                        <option value='1'>Państwo 1</option>
-                        <option value='2'>Państwo 2</option>
-                        <option value='3'>Państwo 3</option>
+                        <option value="" disabled selected>wybierz państwo</option>
+                        {this.props.countries.map((element)=>(
+                            <option key={element.ISO2} value={element.Slug}>{element.Country}</option>
+                        ))}
                     </select>
                     <span className="search-button">
                     <FontAwesomeIcon icon={faSearch} color="#d40000"/>
@@ -35,4 +41,14 @@ class Map extends React.Component{
     }
 }
 
-export default Map
+function mapState(state) {
+    const { getCountries } = state;
+    const { loading, countries} = getCountries;
+    return { loading, countries};
+}
+
+const actionCreators = {
+    getCountries:countriesAction.allCountries,
+}
+
+export default connect(mapState, actionCreators)(Map);
