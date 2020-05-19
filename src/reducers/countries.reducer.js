@@ -12,7 +12,7 @@ export default function getCountries(state = initialState, action) {
       case 'GET_ALL_COUNTRIES_SUCCESS':
         return {
             loading:false,
-            countries:action.data
+            countries:action.response.data
         };
       default:
         return state

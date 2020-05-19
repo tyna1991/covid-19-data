@@ -1,7 +1,7 @@
 import {countriesService} from './../services/countries.service'
 import {alertActions} from './alert.actions'
 
-export const countries={
+export const countriesAction={
     //Countries
     allCountries,
 }
@@ -18,5 +18,5 @@ function allCountries() {
             );
     };
     function request() { return { type: 'GET_ALL_COUNTRIES_REQUEST'} }
-    function success(data) { return { type: 'GET_ALL_COUNTRIES_SUCCESS', data  } }
+    function success(response) { return { type: 'GET_ALL_COUNTRIES_SUCCESS', response  } }
 }
