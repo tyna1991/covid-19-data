@@ -2,7 +2,11 @@ const initialState={
     loading:false,
     status:[],
     name:'',
-    period:''
+    slug:'',
+    period:{
+      name:'',
+      dateFrom:''
+    }
 }
 
 
@@ -12,6 +16,7 @@ export default function getStatus(state = initialState, action) {
         return {
             ...state,
             name:action.countryName,
+            slug:action.countryNameSlug,
             loading:true,
         };
       case 'STATUS_BY_COUNTRY_SUCCESS':
@@ -24,6 +29,7 @@ export default function getStatus(state = initialState, action) {
         return {
             ...state,
             name:action.countryName,
+            slug:action.countryNameSlug,
             loading:true,
         };
       case 'STATUS_BY_COUNTRY_FROM_TO_SUCCESS':
