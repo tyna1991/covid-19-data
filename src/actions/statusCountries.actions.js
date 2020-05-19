@@ -18,5 +18,5 @@ function summary() {
             );
     };
     function request() { return { type: 'SUMMARY_REQUEST'} }
-    function success(data) { return { type: 'SUMMARY_SUCCESS', data } }
+    function success(response) { return { type: 'SUMMARY_SUCCESS', response } }
 }
