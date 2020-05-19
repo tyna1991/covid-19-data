@@ -3,7 +3,7 @@ import './../../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import {statusByCountry} from './../../actions/statusByCountry.actions'
+import {statusByCountry} from './../../actions/statusByCountry.actions';
 
 
 class Timeline extends React.Component{
@@ -11,7 +11,22 @@ class Timeline extends React.Component{
         super()
         this.state={
             index:0,
-            periods:['all time', '1 week', '2 weeks', '30 days'],
+            periods:[{
+                name:'all time',
+                dateFrom:''
+            },
+            {
+                name:'1 week',
+                dateFrom:new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+            },
+            {
+                name:'2 weeks',
+                dateFrom:new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
+            },
+            {
+                name:'30 days',
+                dateFrom:new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+            }],
             displayOptions:false,
         }
         this.listOfPeriods = React.createRef();
@@ -20,7 +35,17 @@ class Timeline extends React.Component{
         this.handleClickOutside = this.handleClickOutside.bind(this)
     }
     check = <FontAwesomeIcon icon={faCheck} color="#d5d5d5"/>
+    componentDidUpdate(prevProps){
+        if(prevProps.period.name!==this.props.period.name){
+            if(this.props.period.dateFrom){
+                this.props.byCountryAndStatusAfterDate(this.props.slug, this.props.period.dateFrom, this.props.name)
+            }else{
+                this.props.byCountryAllStatus(this.props.slug, this.props.name)
+            }
+        }
+    }
     displayOptions() {
+        if(!this.props.status.length) return;
         this.setState((prevState)=>{
             return{
                 displayOptions:!prevState.displayOptions
@@ -44,14 +69,14 @@ class Timeline extends React.Component{
     return <div className="timeline">
                 <h4>Timeline</h4>
                 <div ref={this.listOfPeriods} className="period-change">
-                    <div onClick={this.displayOptions} className="select">
-                        <span>{this.state.periods[this.state.index]}</span>
+                    <div onClick={this.displayOptions} className="select" style={{opacity:this.props.status.length ? '1' : '0.5'}}>
+                        <span>{this.state.periods[this.state.index].name}</span>
                         <FontAwesomeIcon icon={faChevronDown} color="#d5d5d5"/>
                     </div>
                     <div className="options" style={{display:this.state.displayOptions ? 'block' : 'none'}}>
                        <ul>
                        {this.state.periods.map((period, index)=>(
-                           <li key={index} onClick={()=>{this.selectPeriod(index)}}>{period}{this.state.index===index && this.check}</li>
+                           <li data-from={period.dateFrom} key={index} onClick={()=>{this.selectPeriod(index)}}>{period.name}{this.state.index===index && this.check}</li>
                        ))} 
                        </ul>
                     </div>
@@ -64,11 +89,15 @@ class Timeline extends React.Component{
 }
 
 function mapState(state) {
-    return {};
+    const { getStatus } = state;
+    const {period, status, name, slug} = getStatus;
+    return {period, status, name, slug};
 }
 
 const actionCreators = {
     setPeriod:statusByCountry.setPeriod,
+    byCountryAndStatusAfterDate:statusByCountry.byCountryAndStatusAfterDate,
+    byCountryAllStatus:statusByCountry.byCountryAllStatus,
 }
 
 export default connect(mapState, actionCreators)(Timeline);
