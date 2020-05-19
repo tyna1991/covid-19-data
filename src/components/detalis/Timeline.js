@@ -1,7 +1,9 @@
 import React from 'react';
 import './../../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp, faChevronDown, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import {statusByCountry} from './../../actions/statusByCountry.actions'
 
 
 class Timeline extends React.Component{
@@ -9,7 +11,7 @@ class Timeline extends React.Component{
         super()
         this.state={
             index:0,
-            periods:['cały okres', '1 tydzień', '2 tygodnie', '30 dni'],
+            periods:['all time', '1 week', '2 weeks', '30 days'],
             displayOptions:false,
         }
         this.listOfPeriods = React.createRef();
@@ -29,7 +31,7 @@ class Timeline extends React.Component{
         this.setState({
             ...this.state,
             index
-        }, ()=>{this.displayOptions()})
+        }, ()=>{this.displayOptions(); this.props.setPeriod(this.state.periods[index])})
     }
     componentWillMount() { document.addEventListener("click", this.handleClickOutside, false)};
     componentWillUnmount() { document.removeEventListener("click", this.handleClickOutside, false); }
@@ -61,4 +63,12 @@ class Timeline extends React.Component{
     }
 }
 
-export default Timeline
+function mapState(state) {
+    return {};
+}
+
+const actionCreators = {
+    setPeriod:statusByCountry.setPeriod,
+}
+
+export default connect(mapState, actionCreators)(Timeline);
