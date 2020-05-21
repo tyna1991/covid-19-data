@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { store } from './helpers/store';
 import { Provider } from 'react-redux';
+import 'leaflet/dist/leaflet.css'
 
 ReactDOM.render(
   <Provider store={store}>
