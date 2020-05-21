@@ -23,7 +23,7 @@ export default function getStatus(state = initialState, action) {
         return {
             ...state,
             loading:false,
-            status:action.response.data.length ? action.response.data : [{Country:state.name}]
+            status:action.response.data
         };
         case 'STATUS_BY_COUNTRY_FROM_TO_REQUEST':
         return {
@@ -36,7 +36,7 @@ export default function getStatus(state = initialState, action) {
         return {
             ...state,
             loading:false,
-            status:action.response.data.length ? action.response.data : [{Country:state.name}]
+            status:action.response.data
         };
         case 'SET_PERIOD':
           return {
