@@ -6,7 +6,7 @@ body{
 }
 .App {
   display:flex;
-  min-height: 100vh;
+  height: 100vh;
   flex-direction: row-reverse;
 }
 
@@ -91,6 +91,11 @@ h2.country-name{
   padding: 8px;
   display: flex;
   align-items: center;
+  padding-left: 20px;
+}
+.period-chart.disabled{
+  opacity:.4;
+  pointer-events: none;
 }
 .period-change{
   width: 200px;
@@ -108,6 +113,8 @@ position: relative;
   top:-20px;
   border-radius: 16px;
   top: 0px;
+  z-index:9;
+  padding-left: 20px;
 }
 .period-change ul{
   list-style-type: none;
@@ -143,13 +150,15 @@ h4{
 }
 .country-change .search-button{
   position: relative;
-  right: 40px;
-  height: 35px;
-  width: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+    right: 38px;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 2px 0px 31px 3px rgba(0,0,0,0.75)
 }
 .country-change select{
   width: 400px;
@@ -161,6 +170,7 @@ h4{
   border:2px solid #d40000;
   -webkit-appearance: none;
   font-family: 'Roboto';
+  padding-left: 20px;
 }
 /* customize scrollbar css */
 #scrollbar-custom::-webkit-scrollbar{
@@ -191,6 +201,9 @@ h4{
 #scrollbar-custom{
   scrollbar-color: #fcfcfc  #d40000;
   scrollbar-width: thin;
+}
+.recharts-default-legend{
+  padding-top:15px !important
 }
 @media(max-width:1420px){
   .App .map{

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import {statusByCountry} from './../../actions/statusByCountry.actions';
+import Chart from './Chart';
 
 
 class Timeline extends React.Component{
@@ -45,7 +46,6 @@ class Timeline extends React.Component{
         }
     }
     displayOptions() {
-        if(!this.props.status.length) return;
         this.setState((prevState)=>{
             return{
                 displayOptions:!prevState.displayOptions
@@ -68,8 +68,9 @@ class Timeline extends React.Component{
     render(){
     return <div className="timeline">
                 <h4>Timeline</h4>
+                <div className={`period-chart ${(!this.props.status.length && !this.state.index) && 'disabled'}`}>
                 <div ref={this.listOfPeriods} className="period-change">
-                    <div onClick={this.displayOptions} className="select" style={{opacity:this.props.status.length ? '1' : '0.5'}}>
+                    <div onClick={this.displayOptions} className='select'>
                         <span>{this.state.periods[this.state.index].name}</span>
                         <FontAwesomeIcon icon={faChevronDown} color="#d5d5d5"/>
                     </div>
@@ -81,9 +82,8 @@ class Timeline extends React.Component{
                        </ul>
                     </div>
                 </div>
-                <div className="bg" style={{height:"150px"}}>
-
-                </div>
+                    <Chart data={this.props.status}/>   
+                </div>        
             </div>
     }
 }
