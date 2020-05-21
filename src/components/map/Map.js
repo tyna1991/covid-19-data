@@ -28,10 +28,14 @@ class MapWrapper extends React.Component{
             countries:[],
             position:defaultPosition,
             zoom:defaultZoom,
-            countriesSelect:[]
+            countriesSelect:[],
+            clickEvent:false,
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submit = this.submit.bind(this)
+        this.clickHandler = this.clickHandler.bind(this)
+        this.handlePopupClose = this.handlePopupClose.bind(this)
+        this.changePositionAndZoom = this.changePositionAndZoom.bind(this)
     }
     componentDidMount(){
         this.props.summary();
@@ -64,10 +68,20 @@ class MapWrapper extends React.Component{
     const {value} = e.target;
     var dataset = e.target.options[e.target.selectedIndex].dataset; 
     this.setState({
-        selectedCountrySlug:value,
-        selectedCountryName:dataset.name,
+        selectedCountrySlug:dataset.slug,
+        selectedCountryName:value,
         selectedCountryISO2:dataset.iso2,
+        clickEvent:false
     })
+    }
+    clickHandler(e){
+        var options = e.target.options; 
+        this.setState({
+            selectedCountrySlug:options.slug,
+            selectedCountryName:options.name,
+            selectedCountryISO2:options.iso2,
+            clickEvent:true
+        }, ()=>{this.submit()})
     }
     submit(){
         if(!this.state.selectedCountrySlug) return;
@@ -76,26 +90,40 @@ class MapWrapper extends React.Component{
         }else{
             this.props.byCountryAndStatusAfterDate(this.state.selectedCountrySlug, this.props.period.dateFrom, this.state.selectedCountryName)
         }
+        
+        if(!this.state.clickEvent){
+            this.changePositionAndZoom()
+        }
+    }
+    changePositionAndZoom(){
         const selectedCountry = countriesGeoLocation.filter(countryGeo =>{
             return countryGeo.country == this.state.selectedCountryISO2
         })
-        console.log(this.state.selectedCountryISO2)
         const position = selectedCountry.length ? [selectedCountry[0].latitude, selectedCountry[0].longitude] : [];
         this.setState({
             position: position.length ? position : defaultPosition,
             zoom: 5
         })
     }
+    handlePopupClose(){
+        this.setState({
+           selectedCountryName:'',
+           selectedCountryISO2:'',
+           selectedCountrySlug:'' ,
+        }, ()=>{
+            this.props.resetStatus()
+        })
+    }
     render(){
-    console.log(this.state.countries)
+    console.log(this.state)
     return <div className="map">
-            <Map center={this.state.position} zoom={this.state.zoom}>
+            <Map center={this.state.position} zoom={this.state.zoom} onPopupClose={this.handlePopupClose}>
             <div className="country-change">
                 <div className="select-wrapper">
-                    <select onChange={this.changeHandler} name="selectedCountry">
-                        <option value="" disabled selected>wybierz państwo</option>
+                    <select value={this.state.selectedCountryName} onChange={this.changeHandler} name="selectedCountryName">
+                        <option value="">wybierz państwo</option>
                         {this.state.countriesSelect.map((element)=>(
-                            <option key={element.ISO2} value={element.Slug} data-name={element.Country} data-iso2={element.ISO2}>{element.Country}</option>
+                            <option key={element.ISO2} value={element.Country} data-slug={element.Slug} data-iso2={element.ISO2}>{element.Country}</option>
                         ))}
                     </select>
                     <span className="search-button" onClick={this.submit}>
@@ -107,8 +135,8 @@ class MapWrapper extends React.Component{
                 attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
                 url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
                 />
-                {this.state.countries.map(({ lat, lng, Country, TotalConfirmed, TotalDeaths, TotalRecovered}, index) => (
-                <Marker position={[lat, lng]} icon={customMarker} key={index}>
+                {this.state.countries.map(({ lat, lng, Country, TotalConfirmed, TotalDeaths, TotalRecovered, CountryCode, Slug}, index) => (
+                <Marker position={[lat, lng]} icon={customMarker} key={index} onClick={this.clickHandler} name={Country} iso2={CountryCode} slug={Slug}>
                     <Popup>
                         <h5>{Country}</h5>
                         <p>confirmed: <b>{TotalConfirmed}</b></p>
@@ -132,6 +160,7 @@ const actionCreators = {
     getAllCountries:countriesAction.allCountries,
     byCountryAllStatus:statusByCountry.byCountryAllStatus,
     byCountryAndStatusAfterDate:statusByCountry.byCountryAndStatusAfterDate,
+    resetStatus:statusByCountry.resetStatus,
     summary:statusCountries.summary,
 }
 

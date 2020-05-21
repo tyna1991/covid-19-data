@@ -43,6 +43,8 @@ export default function getStatus(state = initialState, action) {
               ...state,
               period:action.period
           };
+        case 'RESET_STATUS':
+          return initialState
       default:
         return state
     }

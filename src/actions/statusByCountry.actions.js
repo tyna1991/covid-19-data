@@ -5,7 +5,8 @@ export const statusByCountry={
     //By Country All Status
     byCountryAllStatus, 
     byCountryAndStatusAfterDate,
-    setPeriod
+    setPeriod,
+    resetStatus
 }
 function byCountryAllStatus(countryNameSlug, countryName) {
     return dispatch => {
@@ -39,4 +40,7 @@ function byCountryAndStatusAfterDate(countryNameSlug, from, countryName) {
 }
 function setPeriod(period) {
     return dispatch => dispatch({ type: 'SET_PERIOD', period} );
+}
+function resetStatus() {
+    return dispatch => dispatch({ type: 'RESET_STATUS'} );
 }
