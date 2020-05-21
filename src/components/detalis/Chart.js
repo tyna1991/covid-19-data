@@ -30,7 +30,7 @@ export default class Chart extends React.Component {
       <AreaChart
         data={this.state.data}
         margin={{
-          top: 10, right: 0, left: -5, bottom: 0,
+          top: 10, right: 0, left: 0, bottom: 0,
         }}
       >
         <defs>
