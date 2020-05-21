@@ -1,4 +1,4 @@
-export default function alert(state = {}, action) {
+export default function alert(state = {message:''}, action) {
     switch (action.type) {
       case 'ERROR':
         return {
