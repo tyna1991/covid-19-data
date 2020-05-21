@@ -27,7 +27,8 @@ class MapWrapper extends React.Component{
             selectedCountryISO2:'',
             countries:[],
             position:defaultPosition,
-            zoom:defaultZoom
+            zoom:defaultZoom,
+            countriesSelect:[]
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submit = this.submit.bind(this)
@@ -47,7 +48,16 @@ class MapWrapper extends React.Component{
             this.setState({
                 countries
             })
-
+        }
+        if(prevProps.getCountries.countries !== this.props.getCountries.countries){
+            const countriesSelect = this.props.getCountries.countries.sort((a,b)=>{
+                if(a.Country < b.Country) { return -1; }
+                if(a.Country > b.Country) { return 1; }
+                return 0;
+            })
+            this.setState({
+                countriesSelect
+            })
         }
     }
     changeHandler(e){
@@ -73,7 +83,7 @@ class MapWrapper extends React.Component{
         const position = selectedCountry.length ? [selectedCountry[0].latitude, selectedCountry[0].longitude] : [];
         this.setState({
             position: position.length ? position : defaultPosition,
-            zoom: 4
+            zoom: 5
         })
     }
     render(){
@@ -84,7 +94,7 @@ class MapWrapper extends React.Component{
                 <div className="select-wrapper">
                     <select onChange={this.changeHandler} name="selectedCountry">
                         <option value="" disabled selected>wybierz państwo</option>
-                        {this.props.getCountries.countries.map((element)=>(
+                        {this.state.countriesSelect.map((element)=>(
                             <option key={element.ISO2} value={element.Slug} data-name={element.Country} data-iso2={element.ISO2}>{element.Country}</option>
                         ))}
                     </select>
