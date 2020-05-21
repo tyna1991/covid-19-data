@@ -36,6 +36,9 @@ p.description{
   color:#707070;
   margin: 30px 0px;
 }
+p.description b{
+  color:#15D4B7
+}
 .bg{
   background-color: #F3F3F3;
   padding:25px;
