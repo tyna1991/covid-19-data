@@ -66,7 +66,7 @@ function mapState(state) {
     const { getSummary, getStatus } = state;
     const {  countries, global} = getSummary;
     const { status, name, loading} = getStatus;
-    return { loading, countries, global, status, name, loading};
+    return { loading, countries, global, status, name};
 }
 
 const actionCreators = {}

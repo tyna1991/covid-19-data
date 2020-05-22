@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area
 } from 'recharts';
 
 export default class Chart extends React.Component {
@@ -13,7 +13,6 @@ export default class Chart extends React.Component {
 
   componentDidUpdate(prevProps){
     if(prevProps.data!==this.props.data){
-      console.log(this.props.data);
       const data = this.props.data.map((element)=>{
         return {date:new Date(element.Date).toISOString().split('T')[0], confirmed:element.Confirmed, deaths:element.Deaths, recovered:element.Recovered}
       })
@@ -23,7 +22,6 @@ export default class Chart extends React.Component {
     }
   }
   render() {
-    console.log(this.state.data)
     return (
       <div style={{ width: '100%', height: 200 }}>
        <ResponsiveContainer>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './../../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faEthernet } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import {countriesAction} from './../../actions/allCountries.actions'
 import {statusByCountry} from './../../actions/statusByCountry.actions'
 import {statusCountries} from './../../actions/statusCountries.actions'
@@ -46,7 +46,7 @@ class MapWrapper extends React.Component{
             this.props.getAllCountries();
             const countries = this.props.getSummary.countries.map(country=>{
                 const index = countriesGeoLocation.findIndex(countryGeo =>{
-                    return countryGeo.country == country.CountryCode
+                    return countryGeo.country === country.CountryCode
                 })
                 return {...country, lat: countriesGeoLocation[index].latitude, lng:countriesGeoLocation[index].longitude }
             })
@@ -98,7 +98,7 @@ class MapWrapper extends React.Component{
     }
     changePositionAndZoom(){
         const selectedCountry = countriesGeoLocation.filter(countryGeo =>{
-            return countryGeo.country == this.state.selectedCountryISO2
+            return countryGeo.country === this.state.selectedCountryISO2
         })
         const position = selectedCountry.length ? [selectedCountry[0].latitude, selectedCountry[0].longitude] : [];
         this.setState({
