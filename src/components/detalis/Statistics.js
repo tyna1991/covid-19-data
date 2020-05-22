@@ -3,6 +3,7 @@ import './../../App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux';
+import preloader from './../../assets/preloader.svg'
 
 
 class Statistics extends React.Component{
@@ -36,6 +37,7 @@ class Statistics extends React.Component{
 
     render(){
     return <div className="statistics">
+        {this.props.loading && <div className='preloader'><img className='preloader-img' src={preloader} alt="preloader"/></div> }
         <h4>Statistics</h4>
         <div className="table-container">
             <div className="bg">
@@ -62,9 +64,9 @@ class Statistics extends React.Component{
 
 function mapState(state) {
     const { getSummary, getStatus } = state;
-    const { loading, countries, global} = getSummary;
-    const { status, name} = getStatus;
-    return { loading, countries, global, status, name};
+    const {  countries, global} = getSummary;
+    const { status, name, loading} = getStatus;
+    return { loading, countries, global, status, name, loading};
 }
 
 const actionCreators = {}

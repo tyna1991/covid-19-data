@@ -5,6 +5,7 @@ import { faChevronDown, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import {statusByCountry} from './../../actions/statusByCountry.actions';
 import Chart from './Chart';
+import preloader from './../../assets/preloader.svg'
 
 
 class Timeline extends React.Component{
@@ -65,8 +66,9 @@ class Timeline extends React.Component{
             this.displayOptions();
         }
     }
-    render(){
+    render(){   
     return <div className="timeline">
+        {this.props.loading && <div className='preloader'><img className='preloader-img' src={preloader} alt="preloader"/></div> }
                 <h4>Timeline</h4>
                 <div className={`period-chart ${(!this.props.status.length && !this.state.index) && 'disabled'}`}>
                 <div ref={this.listOfPeriods} className="period-change">
@@ -90,8 +92,8 @@ class Timeline extends React.Component{
 
 function mapState(state) {
     const { getStatus } = state;
-    const {period, status, name, slug} = getStatus;
-    return {period, status, name, slug};
+    const {period, status, name, slug, loading} = getStatus;
+    return {period, status, name, slug, loading};
 }
 
 const actionCreators = {

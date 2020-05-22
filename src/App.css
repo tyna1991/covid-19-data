@@ -5,6 +5,7 @@ html, body, #map {
 }
 .leaflet-container{
   height: 100%;
+  background: #222!important;
 }
 .leaflet-popup-content p{
   margin: 2px 0 !important;
@@ -68,7 +69,7 @@ p.description b{
 }
 .bg{
   background-color: #F3F3F3;
-  padding:25px;
+  padding:20px;
 }
 .country-name span{
   text-transform: uppercase;
@@ -81,7 +82,7 @@ p.description b{
 .amount{
   color:#d40000;
   font-weight: 600;
-  font-size: 32px;
+  font-size: 25px;
 }
 .col{
   display: flex;
@@ -111,6 +112,7 @@ h2.country-name{
   margin-top: 0px;
   margin-bottom: 25px;
   font-size: 20px;
+  margin-left: 10px;
 }
 .table-container{
   margin: 30px 0px;
@@ -182,7 +184,7 @@ h4{
 }
 .country-change .search-button{
   position: relative;
-    right: 38px;
+  right: 38px;
     border-radius: 50%;
     height: 35px;
     width: 35px;
@@ -237,6 +239,12 @@ h4{
 .recharts-default-legend{
   padding-top:15px !important
 }
+.preloader{
+  position: absolute;
+  transform: translate(50%, -50%);
+  top: 50%;
+  right: 50%;
+}
 @media(max-width:1420px){
   .App .map{
     flex: 1.5;
@@ -289,6 +297,7 @@ h4{
   }
   .country-change .search-button{
     position: absolute;
+    right: 32px;
   }
   .country-change select{
     width: 100%;
@@ -303,7 +312,7 @@ h4{
     font-size: 30px;
   }
   .amount{
-    font-size: 30px;
+    font-size: 22px;
   }
 }
 @media(max-width:420px){
@@ -315,5 +324,8 @@ h4{
   }
   .bg{
     padding: 20px 10px;
+  }
+  .amount{
+    font-size: 18px;
   }
 }

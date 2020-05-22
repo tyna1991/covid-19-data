@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import countriesGeoLocation from './countries.json'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet'
+import preloader from './../../assets/preloader.svg'
 
 var customMarker = L.divIcon({
     className: 'custom-div-icon',
@@ -115,8 +116,8 @@ class MapWrapper extends React.Component{
         })
     }
     render(){
-    console.log(this.state)
     return <div className="map">
+        {(this.props.getSummary.loading || this.props.getCountries.loading) && <div className='preloader'><img className='preloader-img' src={preloader} alt="preloader"/></div> }
             <Map center={this.state.position} zoom={this.state.zoom} onPopupClose={this.handlePopupClose}>
             <div className="country-change">
                 <div className="select-wrapper">
