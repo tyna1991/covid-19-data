@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Demo version
+
+Open [https://naughty-ardinghelli-a85095.netlify.app](https://naughty-ardinghelli-a85095.netlify.app) to view it in the browser.
 
 ## Available Scripts
 
