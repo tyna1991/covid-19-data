@@ -136,7 +136,7 @@ class MapWrapper extends React.Component{
                 </div>
                 <Map center={this.state.position} zoom={this.state.zoom} onPopupClose={this.handlePopupClose} onPopupOpen={this.clickHandler}>
                     <TileLayer
-                    attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ' maxZoom='16'
+                    attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ' maxZoom='16' minZoom='2'
                     url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
                     />
                     {this.state.countries.map(({ lat, lng, Country, TotalConfirmed, TotalDeaths, TotalRecovered, CountryCode, Slug}, index) => (
