@@ -11,7 +11,8 @@ function byCountryAllStatus(countryName) {
     return axios.get(`https://api.covid19api.com/country/${countryName}`)
 }
 function byCountryAndStatusAfterDate(countryName, from) {
-    return axios.get(`https://api.covid19api.com/live/country/${countryName}/status/confirmed/date/${from}`)
+    const to = new Date().toISOString().split('T')[0] + 'T00:00:00Z'
+    return axios.get(`https://api.covid19api.com/country/${countryName}?from=${from}&to=${to}`)
 }
 function summary() {
     return axios.get('https://api.covid19api.com/summary')

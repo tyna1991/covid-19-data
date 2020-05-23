@@ -19,15 +19,15 @@ class Timeline extends React.Component{
             },
             {
                 name:'1 week',
-                dateFrom:new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+                dateFrom:new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] + 'T00:00:00Z'
             },
             {
                 name:'2 weeks',
-                dateFrom:new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()
+                dateFrom:new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]+ 'T00:00:00Z'
             },
             {
                 name:'30 days',
-                dateFrom:new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+                dateFrom:new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]+ 'T00:00:00Z'
             }],
             displayOptions:false,
         }
@@ -38,7 +38,7 @@ class Timeline extends React.Component{
     }
     check = <FontAwesomeIcon icon={faCheck} color="#d5d5d5"/>
     componentDidUpdate(prevProps){
-        if(prevProps.period.name!==this.props.period.name){
+        if((prevProps.period.name!==this.props.period.name) && this.props.period.name){
             if(this.props.period.dateFrom){
                 this.props.byCountryAndStatusAfterDate(this.props.slug, this.props.period.dateFrom, this.props.name)
             }else{
@@ -70,7 +70,8 @@ class Timeline extends React.Component{
     return <div className="timeline">
         {this.props.loading && <div className='preloader'><img className='preloader-img' src={preloader} alt="preloader"/></div> }
                 <h4>Timeline</h4>
-                <div className={`period-chart ${(!this.props.status.length && !this.state.index) && 'disabled'}`}>
+                {/* className={`period-chart ${(!this.props.status.length) && 'disabled'}`} */}
+                <div>
                 <div ref={this.listOfPeriods} className="period-change">
                     <div onClick={this.displayOptions} className='select'>
                         <span>{this.state.periods[this.state.index].name}</span>
