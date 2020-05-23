@@ -5,7 +5,7 @@ html, body, #map {
 }
 .leaflet-container{
   height: 100%;
-  background: #222!important;
+  background: #d0cfd4!important;
 }
 .leaflet-popup-content p{
   margin: 2px 0 !important;
@@ -43,10 +43,9 @@ body{
   flex:1;
   padding:35px;
   overflow-y: auto;
-  -webkit-box-shadow: 2px 0px 31px 3px rgba(0,0,0,0.75);
-  -moz-box-shadow: 2px 0px 31px 3px rgba(0,0,0,0.75);
-  box-shadow: 2px 0px 31px 3px rgba(0,0,0,0.75);
+  box-shadow: 2px 0px 31px 3px rgba(0, 0, 0, 0.14);
   position: relative;
+  z-index: 999;
 }
 
 .App .map{

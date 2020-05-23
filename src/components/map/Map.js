@@ -136,8 +136,8 @@ class MapWrapper extends React.Component{
                 </div>
                 <Map center={this.state.position} zoom={this.state.zoom} onPopupClose={this.handlePopupClose} onPopupOpen={this.clickHandler}>
                     <TileLayer
-                    attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-                    url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+                    attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ' maxZoom='16'
+                    url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
                     />
                     {this.state.countries.map(({ lat, lng, Country, TotalConfirmed, TotalDeaths, TotalRecovered, CountryCode, Slug}, index) => (
                     <Marker position={[lat, lng]} icon={customMarker} key={index} name={Country} iso2={CountryCode} slug={Slug}>
