@@ -20,7 +20,8 @@ export default function getSummary(state = initialState, action) {
         };
         case 'SUMMARY_ERROR':
           return {
-              loading:false,
+            ...state,
+            loading:false,
           };
       default:
         return state
