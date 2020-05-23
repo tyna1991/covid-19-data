@@ -13,10 +13,12 @@ function allCountries() {
                 data => {dispatch(success(data));
                 },
                 error => {
+                    dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
             );
     };
     function request() { return { type: 'GET_ALL_COUNTRIES_REQUEST'} }
     function success(response) { return { type: 'GET_ALL_COUNTRIES_SUCCESS', response  } }
+    function failure(error) { return { type: 'GET_ALL_COUNTRIES_ERROR', error } }
 }

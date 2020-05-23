@@ -13,10 +13,12 @@ function summary() {
                 data => {dispatch(success(data));
                 },
                 error => {
+                    dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
             );
     };
     function request() { return { type: 'SUMMARY_REQUEST'} }
     function success(response) { return { type: 'SUMMARY_SUCCESS', response } }
+    function failure(error) { return { type: 'SUMMARY_ERROR', error } }
 }

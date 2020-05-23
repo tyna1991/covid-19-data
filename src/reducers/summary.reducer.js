@@ -18,6 +18,10 @@ export default function getSummary(state = initialState, action) {
             global:action.response.data.Global,
             countries:action.response.data.Countries
         };
+        case 'SUMMARY_ERROR':
+          return {
+              loading:false,
+          };
       default:
         return state
     }

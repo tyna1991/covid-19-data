@@ -25,6 +25,11 @@ export default function getStatus(state = initialState, action) {
             loading:false,
             status:action.response.data
         };
+        case 'STATUS_BY_COUNTRY_ERROR':
+        return {
+            ...state,
+            loading:false,
+        };
         case 'STATUS_BY_COUNTRY_FROM_TO_REQUEST':
         return {
             ...state,
@@ -38,6 +43,11 @@ export default function getStatus(state = initialState, action) {
             loading:false,
             status:action.response.data
         };
+        case 'STATUS_BY_COUNTRY_FROM_TO_ERROR':
+          return {
+              ...state,
+              loading:false,
+          };
         case 'SET_PERIOD':
           return {
               ...state,

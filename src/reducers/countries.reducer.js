@@ -15,6 +15,11 @@ export default function getCountries(state = initialState, action) {
             loading:false,
             countries:action.response.data
         };
+      case 'GET_ALL_COUNTRIES_ERROR':
+        return {
+            loading:false,
+            countries:action.response.data
+        };
       default:
         return state
     }
