@@ -32,7 +32,7 @@ export default class Chart extends React.Component {
         }}
       >
         <defs>
-    <linearGradient id="confirmed" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="deaths" x1="0" y1="0" x2="0" y2="1">
       <stop offset="5%" stopColor="#d40000" stopOpacity={0.8}/>
       <stop offset="95%" stopColor="#d40000" stopOpacity={0}/>
     </linearGradient>
@@ -40,7 +40,7 @@ export default class Chart extends React.Component {
       <stop offset="5%" stopColor="#58D415" stopOpacity={0.8}/>
       <stop offset="95%" stopColor="#58D415" stopOpacity={0}/>
     </linearGradient>
-    <linearGradient id="deaths" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="confirmed" x1="0" y1="0" x2="0" y2="1">
       <stop offset="5%" stopColor="#15D4B7" stopOpacity={0.8}/>
       <stop offset="95%" stopColor="#15D4B7" stopOpacity={0}/>
     </linearGradient>
@@ -50,9 +50,9 @@ export default class Chart extends React.Component {
         <YAxis/>
         <Tooltip />
         <Legend iconType='rect' margin={{ top: 15 }}/>
-        <Area type="monotone" dataKey="deaths" stroke="#15D4B7" fillOpacity={1} fill="url(#deaths)" />
+        <Area type="monotone" dataKey="deaths" stroke="#d40000" fillOpacity={1} fill="url(#deaths)" />
         <Area type="monotone" dataKey="recovered" stroke="#58D415" fillOpacity={1} fill="url(#recovered)"/>
-        <Area type="monotone" dataKey="confirmed" stroke="#d40000" fillOpacity={1} fill="url(#confirmed)"/>
+        <Area type="monotone" dataKey="confirmed" stroke="#15D4B7" fillOpacity={1} fill="url(#confirmed)"/>
       </AreaChart>
       </ResponsiveContainer>
       </div>

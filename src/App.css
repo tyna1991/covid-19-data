@@ -27,6 +27,7 @@ html, body, #map {
   z-index: 9;
   color: #fff;
   margin: 0px;
+  box-sizing: border-box;
 }
 body{
   font-family: 'Roboto', sans-serif;
@@ -124,6 +125,7 @@ h2.country-name{
   display: flex;
   align-items: center;
   padding-left: 20px;
+  cursor: pointer;
 }
 .period-chart.disabled{
   opacity:.4;
@@ -146,11 +148,10 @@ position: relative;
   border-radius: 16px;
   top: 0px;
   z-index:9;
-  padding-left: 20px;
 }
 .period-change ul{
   list-style-type: none;
-  padding-left: 20px;
+  padding:0px
 }
 .period-change ul li{
   margin: 5px 0px;
@@ -158,6 +159,8 @@ position: relative;
   align-items: center;
   justify-content: space-between;
   margin-right: 20px;
+  margin-left: 20px;
+  cursor: pointer;
 }
 .select{
   position: relative;
@@ -176,7 +179,8 @@ h4{
   display: flex;
   justify-content: flex-end;
   z-index: 999;
-  position: relative;
+  position: absolute;
+  right: 0px;
 }
 .country-change .select-wrapper{
   display: flex;
@@ -203,9 +207,14 @@ h4{
   border-radius: 20px;
   border:2px solid #d40000;
   -webkit-appearance: none;
-  font-family: 'Roboto';
+  font-family: 'Roboto', sans-serif;
   padding-left: 20px;
+  cursor: pointer;
+  background: url('./assets/arrow-down.png') no-repeat right #fff;
+  background-position-x: calc( 100% - -7px );
+  background-position-y: -10px;
 }
+
 /* customize scrollbar css */
 #scrollbar-custom::-webkit-scrollbar{
   width:5px;
@@ -244,6 +253,10 @@ h4{
   transform: translate(50%, -50%);
   top: 50%;
   right: 50%;
+  z-index: 9999;
+}
+.timeline, .map{
+  position:relative
 }
 @media(max-width:1420px){
   .App .map{
@@ -294,6 +307,10 @@ h4{
   .country-change{
     margin-right: 0px;
     padding: 0px 30px;
+    width: 100%;
+    left: 0px;
+    margin: 45px auto 0;
+    box-sizing: border-box;
   }
   .country-change .search-button{
     position: absolute;

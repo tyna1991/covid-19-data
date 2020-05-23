@@ -1,7 +1,5 @@
 import React from 'react';
 import './../../App.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import {countriesAction} from './../../actions/allCountries.actions'
 import {statusByCountry} from './../../actions/statusByCountry.actions'
 import {statusCountries} from './../../actions/statusCountries.actions'
@@ -30,8 +28,9 @@ class MapWrapper extends React.Component{
             position:defaultPosition,
             zoom:defaultZoom,
             countriesSelect:[],
-            clickEvent:false,
+            setZoom:false,
         }
+        this.popup = React.createRef();
         this.changeHandler = this.changeHandler.bind(this)
         this.submit = this.submit.bind(this)
         this.clickHandler = this.clickHandler.bind(this)
@@ -41,7 +40,7 @@ class MapWrapper extends React.Component{
     componentDidMount(){
         this.props.summary();
     }
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps, prevState){
         if(prevProps.getSummary.countries !== this.props.getSummary.countries && this.props.getSummary.countries.length){
             this.props.getAllCountries();
             const countries = this.props.getSummary.countries.map(country=>{
@@ -64,25 +63,29 @@ class MapWrapper extends React.Component{
                 countriesSelect
             })
         }
+        if(prevState.selectedCountryName !== this.state.selectedCountryName){
+            this.submit();
+        }
     }
     changeHandler(e){
-    const {value} = e.target;
-    var dataset = e.target.options[e.target.selectedIndex].dataset; 
-    this.setState({
-        selectedCountrySlug:dataset.slug,
-        selectedCountryName:value,
-        selectedCountryISO2:dataset.iso2,
-        clickEvent:false
-    })
+        this.closePopusOnClick(); 
+        const {value} = e.target;
+        var dataset = e.target.options[e.target.selectedIndex].dataset; 
+        this.setState({
+            selectedCountrySlug:dataset.slug,
+            selectedCountryName:value,
+            selectedCountryISO2:dataset.iso2,
+            setZoom:false
+        }, ()=>{this.submit()})
     }
     clickHandler(e){
-        var options = e.target.options; 
+        var options = e.popup._source.options; 
         this.setState({
             selectedCountrySlug:options.slug,
             selectedCountryName:options.name,
             selectedCountryISO2:options.iso2,
-            clickEvent:true
-        }, ()=>{this.submit()})
+            setZoom:true
+        })
     }
     submit(){
         if(!this.state.selectedCountrySlug) return;
@@ -92,7 +95,7 @@ class MapWrapper extends React.Component{
             this.props.byCountryAndStatusAfterDate(this.state.selectedCountrySlug, this.props.period.dateFrom, this.state.selectedCountryName)
         }
         
-        if(!this.state.clickEvent){
+        if(!this.state.setZoom){
             this.changePositionAndZoom()
         }
     }
@@ -106,6 +109,9 @@ class MapWrapper extends React.Component{
             zoom: 5
         })
     }
+    closePopusOnClick(){
+        this.popup.current.leafletElement.options.leaflet.map.closePopup();
+    }
     handlePopupClose(){
         this.setState({
            selectedCountryName:'',
@@ -117,37 +123,34 @@ class MapWrapper extends React.Component{
     }
     render(){
     return <div className="map">
-        {(this.props.getSummary.loading || this.props.getCountries.loading) && <div className='preloader'><img className='preloader-img' src={preloader} alt="preloader"/></div> }
-            <Map center={this.state.position} zoom={this.state.zoom} onPopupClose={this.handlePopupClose}>
-            <div className="country-change">
-                <div className="select-wrapper">
-                    <select value={this.state.selectedCountryName} onChange={this.changeHandler} name="selectedCountryName">
-                        <option value="">wybierz państwo</option>
-                        {this.state.countriesSelect.map((element)=>(
-                            <option key={element.ISO2} value={element.Country} data-slug={element.Slug} data-iso2={element.ISO2}>{element.Country}</option>
-                        ))}
-                    </select>
-                    <span className="search-button" onClick={this.submit}>
-                    <FontAwesomeIcon icon={faSearch} color="#d40000"/>
-                    </span>
+            {(this.props.getSummary.loading || this.props.getCountries.loading) && <div className='preloader'><img className='preloader-img' src={preloader} alt="preloader"/></div> }
+                <div className="country-change">
+                    <div className="select-wrapper">
+                        <select value={this.state.selectedCountryName} onChange={this.changeHandler} name="selectedCountryName">
+                            <option value="">wybierz państwo</option>
+                            {this.state.countriesSelect.map((element)=>(
+                                <option key={element.ISO2} value={element.Country} data-slug={element.Slug} data-iso2={element.ISO2}>{element.Country}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
+                <Map center={this.state.position} zoom={this.state.zoom} onPopupClose={this.handlePopupClose} onPopupOpen={this.clickHandler}>
+                    <TileLayer
+                    attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                    url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+                    />
+                    {this.state.countries.map(({ lat, lng, Country, TotalConfirmed, TotalDeaths, TotalRecovered, CountryCode, Slug}, index) => (
+                    <Marker position={[lat, lng]} icon={customMarker} key={index} name={Country} iso2={CountryCode} slug={Slug}>
+                        <Popup ref={this.popup}>
+                            <h5>{Country}</h5>
+                            <p>confirmed: <b>{TotalConfirmed}</b></p>
+                            <p>deaths: <b>{TotalDeaths}</b></p>
+                            <p>recoveries: <b>{TotalRecovered}</b></p>
+                        </Popup>
+                    </Marker>
+                    ))}
+                </Map>                
             </div>
-                <TileLayer
-                attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-                url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-                />
-                {this.state.countries.map(({ lat, lng, Country, TotalConfirmed, TotalDeaths, TotalRecovered, CountryCode, Slug}, index) => (
-                <Marker position={[lat, lng]} icon={customMarker} key={index} onClick={this.clickHandler} name={Country} iso2={CountryCode} slug={Slug}>
-                    <Popup>
-                        <h5>{Country}</h5>
-                        <p>confirmed: <b>{TotalConfirmed}</b></p>
-                        <p>deaths: <b>{TotalDeaths}</b></p>
-                        <p>recoveries: <b>{TotalRecovered}</b></p>
-                    </Popup>
-                </Marker>
-                ))}
-            </Map>                
-        </div>
     }
 }
 

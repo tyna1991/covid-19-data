@@ -70,8 +70,7 @@ class Timeline extends React.Component{
     return <div className="timeline">
         {this.props.loading && <div className='preloader'><img className='preloader-img' src={preloader} alt="preloader"/></div> }
                 <h4>Timeline</h4>
-                {/* className={`period-chart ${(!this.props.status.length) && 'disabled'}`} */}
-                <div>
+                <div className={`period-chart ${(!this.props.name.length) && 'disabled'}`}>
                 <div ref={this.listOfPeriods} className="period-change">
                     <div onClick={this.displayOptions} className='select'>
                         <span>{this.state.periods[this.state.index].name}</span>

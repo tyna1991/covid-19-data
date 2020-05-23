@@ -64,8 +64,8 @@ class Statistics extends React.Component{
 
 function mapState(state) {
     const { getSummary, getStatus } = state;
-    const {  countries, global} = getSummary;
-    const { status, name, loading} = getStatus;
+    const {  countries, global, loading} = getSummary;
+    const { status, name} = getStatus;
     return { loading, countries, global, status, name};
 }
 
